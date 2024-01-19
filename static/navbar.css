@@ -1,0 +1,25 @@
+/* navbar.css */
+
+body {
+    margin-top: 60px; /* Adjust the margin-top value based on your navbar height */
+}
+
+nav {
+    background-color: #495057;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #495057;
+}

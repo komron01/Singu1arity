@@ -11,9 +11,11 @@
 </head>
 
 <body>
+    {% include 'navbar.html' %}
+
     <form action="/registration" method="POST" class="registration-form">
         <h2>Join singu/\arity</h2>
-        
+
         <!-- Basic registration fields -->
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
