@@ -1,30 +1,51 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask PostgreSQL Sample</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>singu/\arity</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
-<body>
-    <div class="container">
-        <h1 class="mt-5">Data from PostgreSQL</h1>
-        <ul>
-            {% for row in data %}
-                <li>{{ row }}</li>
-            {% endfor %}
-        </ul>
-    </div>
 
-    <!-- Bootstrap JS (optional) -->
-    <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Profile</a>
+        <a href="#">Notifications</a>
+        <a href="#">Messages</a>
+        <a href="/registration" class="register-button">Register</a>
+        <a href="/login" class="login-button">Login</a>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>singu/\arity</h1>
+        <p>Connect and Share</p>
+    </header>
+
+    <!-- Main Content Sections -->
+    <section>
+        <h2>Section 1</h2>
+        <p>Content goes here...</p>
+    </section>
+
+    <section>
+        <h2>Section 2</h2>
+        <p>Content goes here...</p>
+    </section>
+
+    <!-- In Case You Missed It Section -->
+    <section>
+        <h2>In Case You Missed It</h2>
+        <p>Highlight some posts or updates...</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 singu/\arity</p>
+    </footer>
 </body>
+
 </html>

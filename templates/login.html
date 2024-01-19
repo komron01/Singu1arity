@@ -1,0 +1,30 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to singu/\arity</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+
+<body>
+    <form action="/login" method="POST" class="login-form">
+        <h2>Login to singu/\arity</h2>
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Login</button>
+
+        <!-- Forgot Password link -->
+        <p><a href="/forgot-password">Forgot Password?</a></p>
+    </form>
+</body>
+
+</html>
