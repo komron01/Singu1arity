@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>singu/\arity</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 <body>
@@ -42,6 +43,7 @@
         <h2>In Case You Missed It</h2>
         <p>Highlight some posts or updates...</p>
     </section>
+    <pre>{{ ascii_art|safe }}</pre>
 
     <!-- Footer -->
     <footer>
