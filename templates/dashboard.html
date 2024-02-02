@@ -17,7 +17,7 @@
     {% include 'navbar.html' %}
 
     <!-- User Profile Section -->
-    <section>
+    <section class="dashboard-container">
         <h2>Welcome to Your Dashboard, {{ user[4] }}</h2>
 
         <!-- Display user information -->
@@ -31,11 +31,6 @@
             <p>Phone: {{ user[7] }}</p>
         </div>
         <!-- Add more details as needed -->
-
-        <!-- Add options for user actions, such as updating profile, logging out, etc. -->
-        <a href="/update-profile">Update Profile</a>
-        <!-- In dashboard.html -->
-        <a href="{{ url_for('logout') }}">Logout</a>
 
     </section>
 

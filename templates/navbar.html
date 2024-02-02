@@ -15,8 +15,13 @@
         <a href="#">Profile</a>
         <a href="#">Notifications</a>
         <a href="#">Messages</a>
-        <a href="/registration" class="register-button">Register</a>
-        <a href="/login" class="login-button">Login</a>
+        {% if user %}
+            <a href="/update-profile" class="login-button">Update Profile</a>
+            <a href="{{ url_for('logout') }}" class="login-button">Logout</a>
+        {% else %}
+            <a href="/registration" class="register-button">Register</a>
+            <a href="/login" class="login-button">Login</a>
+        {% endif %}
     </nav>
 </body>
 
