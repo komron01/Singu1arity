@@ -1,6 +1,6 @@
 DATABASE_CONFIG = {
-    'host' : '108.61.174.83',
+    'host' : '127.0.0.1',
     'user' : 'postgres',
     'password' : '123',
-    'database' : 'front_db'
+    'database' : 'Social'
 }
