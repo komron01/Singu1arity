@@ -1,0 +1,48 @@
+<!-- dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    {% include 'navbar.html' %}
+
+    <!-- User Profile Section -->
+    <section>
+        <h2>Welcome to Your Dashboard, {{ user[4] }}</h2>
+
+        <!-- Display user information -->
+        <div>
+            <p>User ID: {{ user[0] }}</p>
+            <p>Username: {{ user[1] }}</p>
+            <p>Email: {{ user[3] }}</p>
+            <p>First Name: {{ user[4] }}</p>
+            <p>Last Name: {{ user[5] }}</p>
+            <p>Date of Birth: {{ user[6] }}</p>
+            <p>Phone: {{ user[7] }}</p>
+        </div>
+        <!-- Add more details as needed -->
+
+        <!-- Add options for user actions, such as updating profile, logging out, etc. -->
+        <a href="/update-profile">Update Profile</a>
+        <!-- In dashboard.html -->
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 singu/\arity</p>
+    </footer>
+</body>
+
+</html>

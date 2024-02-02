@@ -4,6 +4,7 @@ from flask import *
 import settings
 import reg_autho
 app = Flask(__name__)
+app.secret_key = 'singularity'  # Replace with a unique and secret key
 
 @app.route('/')
 def index():
@@ -35,11 +36,15 @@ def login():
         password = request.form['password']
 
         # Perform login validation in the database
-        if reg_autho.db_login(username, password):
-            # Redirect to a dashboard or home page on successful login
-            return redirect(url_for('dashboard'))
-        else:
+        user_id = reg_autho.db_login(username, password)
+        if user_id:            
+            session['user_id'] = user_id[0]
+
+            # Redirect to a dashboard or home page on successful login with user details
+            return redirect(url_for('dashboard', user_id=user_id))
+        else:   
             return 'Something went wrong'
+
 
     # Render the login page for GET requests or failed login
     return render_template('login.html')
@@ -71,10 +76,52 @@ def username_exists_in_database(username):
     except Exception as e:
         print('Error occurred:', e)
         return False  # Assume username exists in case of an error
+# Assume you have functions to retrieve user data from the database based on user_id
+def get_user_data(user_id):
+    try:
+        conn = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = conn.cursor()
 
+        # Replace this query with the appropriate query to get user data based on user_id
+        cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
+        user_data = cursor.fetchone()
+
+        # Disconnect
+        cursor.close()
+        conn.close()
+
+        return user_data
+
+    except Exception as e:
+        print('Error occurred:', e)
+        return None  # Return None if an error occurs
+
+# Dashboard route
 @app.route('/dashboard')
 def dashboard():
-    return "Welcome to your dashboard!"
+    # Retrieve user ID from the session
+    session_user_id = session.get('user_id')
+    
+    # Retrieve user ID from the URL parameters
+    url_user_id = request.args.get('user_id')
+    url_user_id = int(url_user_id) if url_user_id is not None else None
+
+    if session_user_id == url_user_id:
+        # Retrieve additional user data from the database based on user ID
+        user_data = get_user_data(session_user_id)
+        if user_data:
+            # Render the dashboard template with the retrieved user data
+            return render_template('dashboard.html', user=user_data)
+        else:
+            return 'User not found or an error occurred'
+    else:
+        return 'Unauthorized access'
+    
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect('/')
+
 
 @app.route('/success')
 def success():

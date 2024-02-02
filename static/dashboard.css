@@ -1,0 +1,21 @@
+/* dashboard.css */
+
+body {
+    padding: 20px;
+}
+
+.dashboard-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.user-details {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #007bff;
+}

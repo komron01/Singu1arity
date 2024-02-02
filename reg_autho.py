@@ -43,14 +43,14 @@ def db_login(username, password):
         cursor = conn.cursor()
 
         # Example: Check if the provided username and password match a user in the database
-        cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
-        user = cursor.fetchone()
+        cursor.execute("SELECT user_id FROM users WHERE username = %s AND password = %s", (username, password))
+        user_id = cursor.fetchone()
 
         # Disconnect
         cursor.close()
         conn.close()
 
-        return user is not None  # Return True if login is successful
+        return user_id  # Return the user_id if login is successful, None otherwise
     except Exception as e:
         print('Error occurred:', e)
-        return False  # Login failed
+        return None  # Login failed
