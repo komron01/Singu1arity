@@ -8,6 +8,7 @@ app.secret_key = 'singularity'  # Replace with a unique and secret key
 
 @app.route('/')
 def index():
+    
     return render_template('index.html')
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -106,16 +107,17 @@ def dashboard():
     url_user_id = request.args.get('user_id')
     url_user_id = int(url_user_id) if url_user_id is not None else None
 
-    if session_user_id == url_user_id:
-        # Retrieve additional user data from the database based on user ID
-        user_data = get_user_data(session_user_id)
-        if user_data:
-            # Render the dashboard template with the retrieved user data
-            return render_template('dashboard.html', user=user_data)
-        else:
-            return 'User not found or an error occurred'
+    if session_user_id is None or session_user_id != url_user_id:
+        # Unauthorized access, redirect to login
+        return redirect('/login')
+
+    # Retrieve additional user data from the database based on user ID
+    user_data = get_user_data(session_user_id)
+    if user_data:
+        # Render the dashboard template with the retrieved user data
+        return render_template('dashboard.html', user=user_data)
     else:
-        return 'Unauthorized access'
+        return redirect('/login')
     
 @app.route('/logout')
 def logout():
@@ -126,6 +128,16 @@ def logout():
 @app.route('/success')
 def success():
     return "Registration successful!"
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('error.html', error_code=404, error_message='Page not found'), 404
+
+# Custom error handler for other errors
+@app.errorhandler(Exception)
+def handle_error(error):
+    return render_template('error.html', error_code=500, error_message='Internal Server Error'), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
