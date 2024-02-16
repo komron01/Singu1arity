@@ -5,6 +5,7 @@ import settings
 import reg_autho
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
+#eto dobavil mirlan
 
 @app.route('/')
 def index():
