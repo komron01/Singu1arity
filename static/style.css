@@ -128,3 +128,17 @@ footer {
 .dashboard-container a:hover {
     background-color: #283da7;
 }
+body.error {
+    background-color: #f8f9fa;
+    color: #495057;
+    text-align: center;
+    
+}
+
+.error h1 {
+    color: #dc3545;
+}
+
+.error p {
+    margin-top: 20px;
+}

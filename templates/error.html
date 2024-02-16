@@ -1,0 +1,33 @@
+<!-- error.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body class="error">
+
+    <!-- Navigation Bar -->
+    {% include 'navbar.html' %}
+
+    <!-- Error Section -->
+    <section class="error">
+        <h1>Error</h1>
+        <p>Oops! Something went wrong. The page you requested does not exist.</p>
+        <p><a href="/">Go back to the home page</a></p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 singu/\arity</p>
+    </footer>
+
+</body>
+
+</html>
