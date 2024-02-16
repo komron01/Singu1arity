@@ -5,7 +5,7 @@ import settings
 import reg_autho
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
-#eto dobavil sadskyyyy
+#eto dobavil nove
 
 @app.route('/')
 def index():
