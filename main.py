@@ -26,6 +26,9 @@ def registration():
         if reg_autho.db_register(username, password, f_name, s_name, email, dob, phone):
             # Redirect to the success page on successful registration
             return redirect(url_for('success'))
+        else:   
+            return 'Something went wrong'
+
 
     # Render the registration page for GET requests or failed registration
     return render_template('registration.html')
