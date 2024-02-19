@@ -1,4 +1,4 @@
-# Singu/\arity Registration System
+# Singu/\arity 
 
 Welcome to the Singu/\arity Registration System! This web application allows users to register for the Singu/\arity platform. Users can check the availability of their desired usernames and complete the registration process.
 
