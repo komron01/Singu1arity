@@ -62,20 +62,20 @@ The application should be running at [http://localhost:5000](http://localhost:50
 2. Explore the registration form, check username availability, and complete the registration process.
 
 ## File Structure
-├── static/ # Static files (CSS, JS, images)
-│ ├── registration.css # Styles for the registration form
-│ └── registration.js # JavaScript file for real-time username availability check
-├── templates/ # HTML templates
-│ ├── error.html # Error page template
-│ ├── index.html # Home page template
-│ ├── login.html # Login page template
-│ ├── navbar.html # Navbar template
-│ ├── registration.html # Registration form template
-│ └── success.html # Registration success page template
-├── app.py # Main application file
-├── settings.py # Application settings
-├── registration.db # Sample PostgreSQL database file (replace with your actual database)
-└── README.md # Project documentation
+├── static/ # Static files (CSS, JS, images)  
+│ ├── registration.css # Styles for the registration form  
+│ └── registration.js # JavaScript file for real-time username availability check  
+├── templates/ # HTML templates  
+│ ├── error.html # Error page template  
+│ ├── index.html # Home page template  
+│ ├── login.html # Login page template  
+│ ├── navbar.html # Navbar template  
+│ ├── registration.html # Registration form template  
+│ └── success.html # Registration success page template  
+├── app.py # Main application file  
+├── settings.py # Application settings  
+├── registration.db # Sample PostgreSQL database file (replace with your actual database)  
+└── README.md # Project documentation  
 
 
 ## Contributing
