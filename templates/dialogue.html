@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диалоги</title>
+    <!-- Подключаем стили для navbar -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <!-- Подключаем общие стили для страниц -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Подключаем свои стили для страницы диалогов -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dialogue.css') }}">
+    <!-- Подключаем favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    <!-- Вставляем navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Контейнер для секций диалогов -->
+    <div class="dialogue-container">
+        <!-- Секция выбора диалога -->
+        <section class="conversation-selection">
+            <h2>Выберите диалог</h2>
+            <ul id="dialogue-list">
+                <li data-dialogue="dialogue1">Диалог 1</li>
+                <li data-dialogue="dialogue2">Диалог 2</li>
+            </ul>
+        </section>
+
+        <!-- Секция диалогового окна -->
+        <section class="conversation-window">
+            <div class="message-container" id="conversation-window">
+                <!-- Здесь будут отображаться сообщения из выбранного диалога -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Подключаем скрипт для обработки выбора диалога -->
+    <script src="{{ url_for('static', filename='dialogue.js') }}"></script>
+</body>
+
+</html>

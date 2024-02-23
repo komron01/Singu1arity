@@ -16,6 +16,16 @@ def feed():
     
     return render_template('feed.html')
 
+@app.route('/dialogue')
+def dialogue():
+    
+    return render_template('dialogue.html')
+
+@app.route('/profile_update')
+def profile_update():
+    
+    return render_template('profile_update.html')
+
 @app.route('/wall')
 def wall():
     

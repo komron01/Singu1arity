@@ -265,3 +265,106 @@ footer {
     height: 100%;
     width
 }
+
+
+/* dialogue.css */
+
+/* Стили для контейнера с переписками */
+.dialogue-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+/* Стили для секции выбора диалога */
+.conversation-selection {
+    width: 30%;
+}
+
+/* Стили для секции диалогового окна */
+.conversation-window {
+    width: 65%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+/* Стили для контейнера сообщений */
+.message-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Стили для отдельного сообщения */
+.message {
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Стили для отправленного сообщения */
+.sent {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Стили для полученного сообщения */
+.received {
+    align-self: flex-start;
+    background-color: #f1f0f0;
+}
+
+/* Стили для секции выбора диалога */
+.conversation-selection {
+    width: 30%;
+    float: left;
+}
+
+/* Стили для элементов списка диалогов */
+#dialogue-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#dialogue-list li {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ddd;
+}
+
+#dialogue-list li:hover {
+    background-color: #ddd;
+}
+
+/* Стили для секции диалогового окна */
+.conversation-window {
+    width: 70%;
+    float: left;
+    height: 300px;
+    overflow-y: auto;
+}
+
+/* Стили для отдельного сообщения */
+.message {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    word-wrap: break-word;
+}
+
+.update-profile-container {
+    width: 50%; /* задаем ширину контейнера */
+    margin: 0 auto; /* устанавливаем автоматические отступы по бокам для центрирования */
+}
+
+/* profile-update.css */
+
+.update-profile-container {
+    width: 50%;
+    margin: 0 auto;
+}
