@@ -18,12 +18,22 @@ $(document).ready(function () {
     function displaySearchResults(users) {
         var searchResultsDiv = $('#searchResults');
         searchResultsDiv.empty();
-
+    
         if (users.length > 0) {
             // Display the list of users
             var userList = $('<ul>');
             users.forEach(function (user) {
-                userList.append($('<li>').text(user.username));
+                var username = user[0];
+                var profilePicture = user[1] || 'static/default.png';
+    
+                // Create a circular image with reduced size
+                var listItem = $('<li>');
+                var image = $('<img>')
+                    .attr('src', profilePicture)
+                    .attr('alt', username)
+                    .addClass('profile-image'); // Add a class for styling
+                listItem.append(image).append($('<span>').text(username));
+                userList.append(listItem);
             });
             searchResultsDiv.append(userList);
         } else {
@@ -31,4 +41,7 @@ $(document).ready(function () {
             searchResultsDiv.text('No users found.');
         }
     }
+    
+    
+    
 });
