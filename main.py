@@ -165,7 +165,7 @@ def get_users_by_letter(search_letter):
         cursor = conn.cursor()
 
         # Example query to retrieve users starting with the given letter
-        cursor.execute("SELECT username FROM users WHERE username ILIKE %s", (search_letter + '%',))
+        cursor.execute("SELECT username, picture FROM users WHERE username ILIKE %s", (search_letter + '%',))
         users = cursor.fetchall()
         print(users, flush=True)
         # Disconnect
