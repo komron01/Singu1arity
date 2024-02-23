@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Посты на стене</title>
+    <!-- Подключаем стили для navbar -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <!-- Подключаем общие стили для страниц -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Подключаем свои стили для страницы wall -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='wall.css') }}">
+    <!-- Подключаем favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    <!-- Вставляем navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Секция с постами на стене -->
+    <section class="wall-posts">
+        <!-- Пост на стене -->
+        <div class="post">
+            <!-- Имя пользователя с ссылкой на его профиль -->
+            <h3><a href="http://127.0.0.1:5000/profile">SadSkyYyy Stalinski</a></h3>
+            <!-- Время загрузки поста -->
+            <p class="post-time">Время загрузки: 17:30</p>
+            <!-- Описание поста -->
+            <p class="post-description">Описание пользователя или другие данные профиля</p>
+            <!-- Картинка поста -->
+            <img src="https://images.genius.com/ac1bf5fbd3b60b97134cb8ab5e54bf1f.1000x1000x1.png" alt="Фотография поста">
+            <!-- Кнопка "Лайк" -->
+            <button class="like-button">Лайк</button>
+            <!-- Секция комментирования -->
+            <div class="comments-section">
+                <h4>Комментарии</h4>
+                <!-- Форма для добавления комментария -->
+                <form action="#" method="POST">
+                    <input type="text" name="comment" placeholder="Добавить комментарий">
+                    <button type="submit">Отправить</button>
+                </form>
+                <!-- Список комментариев -->
+                <ul class="comments-list">
+                    <li>Комментарий 1</li>
+                    <li>Комментарий 2</li>
+                    <!-- Добавьте новые комментарии по мере необходимости -->
+                </ul>
+            </div>
+        </div>
+        <!-- Добавьте новые посты по мере необходимости -->
+    </section>
+
+</body>
+
+</html>

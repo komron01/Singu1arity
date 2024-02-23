@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <!-- Подключаем стили для navbar -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <!-- Подключаем общие стили для страниц -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Подключаем свои стили для страницы профиля -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}"> -->
+    <!-- Подключаем favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    
+    <div class="left-image-container">
+        <img src="{{ url_for('static', filename='animaciya1.jpg') }}" alt="Animation 1" class="animation" id="animation1">
+    </div>
+    <div class="right-image-container">
+        <img src="{{ url_for('static', filename='animaciya2.jpg') }}" alt="Animation 2" class="animation" id="animation2">
+    </div>
+    <!-- Ваш остальной контент здесь -->
+
+    <!-- Вставляем navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Контейнер для секций профиля и друзей -->
+    <div class="profile-container">
+        <!-- Секция профиля -->
+        <section class="profile-info">
+            <!-- Блок с именем пользователя, фотографией и описанием -->
+            <div class="user-block">
+                <div class="profile-picture">
+                    <img src="https://i.pinimg.com/originals/36/5b/ae/365baefebed96107b34ee5e30a6a9d15.jpg" alt="Фотография профиля">
+                </div>
+                <div class="user-info">
+                    <h2>SadSkyYyy Stalinski</h2>
+                    <p>Описание пользователя или другие данные профиля</p>
+                    <button class="edit-profile-button">Редактировать профиль</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция друзей -->
+        <section class="friends-list">
+            <!-- Блок с друзьями пользователя -->
+            <h3>Друзья</h3>
+            <ul>
+                <li>Друг 1</li>
+                <li>Друг 2</li>
+                <li>Друг 3</li>
+                <!-- Добавьте друзей по мере необходимости -->
+            </ul>
+        </section>
+    </div>
+
+    <!-- Секция с новостями -->
+    <section class="news-feed">
+        <!-- Блок с новостями пользователя -->
+        <h3>Новости</h3>
+        <div class="post">
+            <p id="post-time"><a href="http://127.0.0.1:5000/wall">17:30</a></p>
+            <p>Я сегодня слушал музыку</p>
+            
+
+            <!-- Время публикации поста с ссылкой на страницу wall -->
+        </div>
+        <!-- Добавьте новости по мере необходимости -->
+    </section>
+
+    <script src="{{ url_for('static', filename='animation.js') }}"></script>
+
+    <script>
+        // Удаляем div с картинками после 5 секунд
+        setTimeout(function() {
+            var animation1 = document.getElementById("animation1");
+            var animation2 = document.getElementById("animation2");
+            animation1.remove();
+            animation2.remove();
+        }, 5000);
+    </script>
+
+</body>
+
+</html>

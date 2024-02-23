@@ -1,3 +1,4 @@
+# main.py
 # app.py
 import psycopg2
 from flask import *
@@ -5,12 +6,25 @@ import settings
 import reg_autho
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
-#eto dobavil nove
 
 @app.route('/')
 def index():
     
     return render_template('index.html')
+@app.route('/feed')
+def feed():
+    
+    return render_template('feed.html')
+
+@app.route('/wall')
+def wall():
+    
+    return render_template('wall.html')
+
+@app.route('/profile')
+def profile():
+    
+    return render_template('profile.html')
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -27,9 +41,6 @@ def registration():
         if reg_autho.db_register(username, password, f_name, s_name, email, dob, phone):
             # Redirect to the success page on successful registration
             return redirect(url_for('success'))
-        else:   
-            return 'Something went wrong'
-
 
     # Render the registration page for GET requests or failed registration
     return render_template('registration.html')

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    <!-- Подключаем стили для navbar -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <!-- Подключаем общие стили для страниц -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Подключаем свои стили для страницы ленты новостей -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='feed.css') }}">
+    <!-- Подключаем favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    <!-- Вставляем navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Блок для отображения новостей -->
+    <section class="news-feed">
+        <h2>Лента новостей</h2>
+        <!-- Здесь можно вставить код для отображения новостей -->
+        <div class="news">
+            <div class="news-item">
+                <h3>Заголовок новости 1</h3>
+                <p>Текст новости 1</p>
+            </div>
+            <div class="news-item">
+                <h3>Заголовок новости 2</h3>
+                <p>Текст новости 2</p>
+            </div>
+            <!-- Добавьте сколько угодно новостей сюда -->
+        </div>
+    </section>
+</body>
+
+</html>
