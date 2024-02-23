@@ -1,0 +1,6 @@
+/* profile.css */
+
+.friend-container {
+    display: inline-block; /* or display: inline; */
+    margin-right: 10px; /* Adjust as needed */
+}

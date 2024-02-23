@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль пользователя</title>
     <!-- Подключаем стили для navbar -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}"> -->
     <!-- Подключаем общие стили для страниц -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
     <!-- Подключаем свои стили для страницы профиля -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}"> -->
     <!-- Подключаем favicon -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='profile.js') }}"></script>
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
@@ -38,8 +42,14 @@
                     <img src="https://i.pinimg.com/originals/36/5b/ae/365baefebed96107b34ee5e30a6a9d15.jpg" alt="Фотография профиля">
                 </div>
                 <div class="user-info">
-                    <h2>SadSkyYyy Stalinski</h2>
-                    <p>Описание пользователя или другие данные профиля</p>
+                    <div id="userId" data-user-id="{{ user[0] }}"></div>
+                    <h2>First Name: {{ user[4] }} {{ user[5] }}</h2>
+                    <!-- <p>User ID: {{ user[0] }}</p> -->
+                    <p>Username: {{ user[1] }}</p>
+                    <p>Email: {{ user[3] }}</p>
+                    
+                    <p>Date of Birth: {{ user[6] }}</p>
+                    <p>Phone: {{ user[7] }}</p>
                     <button class="edit-profile-button">Редактировать профиль</button>
                 </div>
             </div>
@@ -48,13 +58,11 @@
         <!-- Секция друзей -->
         <section class="friends-list">
             <!-- Блок с друзьями пользователя -->
-            <h3>Друзья</h3>
-            <ul>
-                <li>Друг 1</li>
-                <li>Друг 2</li>
-                <li>Друг 3</li>
-                <!-- Добавьте друзей по мере необходимости -->
-            </ul>
+            <div class="friends-list-class">
+                <h3>Friends</h3>
+                <ul id="friendsList">
+                </ul>
+            </div>
         </section>
     </div>
 

@@ -23,8 +23,25 @@ def wall():
 
 @app.route('/profile')
 def profile():
+        # Retrieve user ID from the session
+    session_user_id = session.get('user_id')
     
-    return render_template('profile.html')
+    # Retrieve user ID from the URL parameters
+    url_user_id = request.args.get('user_id')
+    url_user_id = int(url_user_id) if url_user_id is not None else None
+
+    if session_user_id is None or session_user_id != url_user_id:
+        # Unauthorized access, redirect to login
+        return redirect('/login')
+
+    # Retrieve additional user data from the database based on user ID
+    user_data = get_user_data(session_user_id)
+    if user_data:
+        # Render the dashboard template with the retrieved user data
+        return render_template('profile.html', user=user_data)
+    else:
+        return redirect('/login')
+    # return render_template('profile.html')
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -111,7 +128,42 @@ def get_user_data(user_id):
     except Exception as e:
         print('Error occurred:', e)
         return None  # Return None if an error occurs
+    
+@app.route('/get_friends/<int:user_id>', methods=['GET'])
+def get_user_friends(user_id):
+    try:
+        conn = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = conn.cursor()
 
+        # Example query to retrieve friends of the given user
+        cursor.execute("""
+            SELECT u.username, u.picture
+            FROM friends f
+            JOIN users u ON (f.user_id2 = u.user_id)
+            WHERE f.user_id1 = %s AND f.status = 'pending'
+        """, (user_id,))
+
+        friends = cursor.fetchall()
+
+        # Disconnect
+        cursor.close()
+        conn.close()
+
+        return jsonify(friends)
+
+    except Exception as e:
+        print('Error occurred:', e)
+        return jsonify([])  # Return an empty list if an error occurs    
+    
+@app.route('/get_friends/<int:user_id>')
+def get_friends(user_id):
+    # Assuming you have a function to fetch friends from the database
+    friends = get_user_friends(user_id)
+
+    # Convert the friends data to a format suitable for JSON response
+    friends_data = [{'id': friend[0], 'username': friend[1]} for friend in friends]
+
+    return jsonify(friends_data)
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
