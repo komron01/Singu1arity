@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include the search.js file -->
+    <script src="{{ url_for('static', filename='search.js') }}"></script>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="search-container">
+        <form id="searchForm">
+            <label for="searchLetter">Search Users:</label>
+            <input type="text" id="searchLetter" name="searchLetter" autocomplete="off">
+        </form>
+
+        <div id="searchResults"></div>
+    </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 singu/\arity</p>
+</footer>
+</body>
+
+</html>

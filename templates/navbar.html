@@ -6,13 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
     <nav>
-        <a href="#">Home</a>
-        <a href="#">Profile</a>
+        <a href="{{ url_for('feed') }}">Home</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('search') }}">Search</a>
         <a href="#">Notifications</a>
         <a href="#">Messages</a>
         {% if user %}

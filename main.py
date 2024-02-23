@@ -57,7 +57,7 @@ def login():
             session['user_id'] = user_id[0]
 
             # Redirect to a dashboard or home page on successful login with user details
-            return redirect(url_for('dashboard', user_id=user_id))
+            return redirect(url_for('profile', user_id=user_id))
         else:   
             return 'Something went wrong'
 
@@ -143,6 +143,40 @@ def logout():
 @app.route('/success')
 def success():
     return "Registration successful!"
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
+# New route for handling user search
+@app.route('/search_user', methods=['GET'])
+def search_users():
+    search_letter = request.args.get('letter')
+
+    # Perform a database query to retrieve users starting with the given letter
+    users = get_users_by_letter(search_letter)
+
+    # Return the results as JSON
+    return jsonify(users)
+
+def get_users_by_letter(search_letter):
+    try:
+        conn = psycopg2.connect(**settings.DATABASE_CONFIG)  # Ensure you have the correct database configuration
+        cursor = conn.cursor()
+
+        # Example query to retrieve users starting with the given letter
+        cursor.execute("SELECT username FROM users WHERE username ILIKE %s", (search_letter + '%',))
+        users = cursor.fetchall()
+        print(users, flush=True)
+        # Disconnect
+        cursor.close()
+        conn.close()
+
+        return users
+
+    except Exception as e:
+        print('Error occurred:', e)
+        return []  # Return an empty list if an error occurs
 
 @app.errorhandler(404)
 def page_not_found(error):

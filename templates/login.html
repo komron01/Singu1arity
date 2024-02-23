@@ -7,13 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to Singularity</title>
+
     <link rel="stylesheet" href="/static/login.css">
+    
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
 </head>
 
 <body>
     {% include 'navbar.html' %}
+    <div>
     <form action="/login" method="POST" class="login-form">
         <h2>Login to singu/\arity</h2>
         
@@ -28,6 +31,7 @@
         <!-- Forgot Password link -->
         <p><a href="/forgot-password">Forgot Password?</a></p>
     </form>
+</div>
 </body>
 
 </html>

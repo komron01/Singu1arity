@@ -1,14 +1,10 @@
 /* registration.css */
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #495057;
+.main-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    margin: 0;
+    height: 100vh; /* Adjust if needed */
 }
 
 .registration-form {
@@ -34,10 +30,11 @@ input {
 }
 
 button {
-    background-color: #28a745;
+    background-color: #007bff;
     color: #ffffff;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%; /* Make the button fill the width of the container */
 }

@@ -18,8 +18,9 @@
 <body>
     {% include 'navbar.html' %}
 
-    <form action="/registration" method="POST" class="registration-form">
-        <h2>Join singu/\arity</h2>
+    <div class="main-container"> <!-- Add a container for the main content -->
+        <form action="/registration" method="POST" class="registration-form">
+            <h2>Join singu/\arity</h2>
 
         <!-- Basic registration fields -->
         <label for="username">Username:</label>
@@ -51,6 +52,12 @@
 
         <button type="submit">Register</button>
     </form>
+</div> <!-- End of main-container -->
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 singu/\arity</p>
+</footer>
 </body>
 
 </html>
