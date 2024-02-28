@@ -23,14 +23,9 @@ $(document).ready(function () {
         friendsList.empty();
     
         if (friends.length > 0) {
-            // Display the list of friends
-            var friendsUl = $('<ul>');
             friends.forEach(function (friend) {
                 // Create a list item for each friend
-                var listItem = $('<li>');
-    
-                // Create a div for the friend container
-                var friendContainer = $('<div>').addClass('friend-container');
+                var listItem = $('<li>').addClass('friend-container');
     
                 // Create a div for the profile picture
                 var profilePictureDiv = $('<div>').addClass('profile-picture');
@@ -41,24 +36,17 @@ $(document).ready(function () {
                 var userInfoDiv = $('<div>').addClass('user-info');
                 userInfoDiv.append($('<h4>').text(friend[0]));
     
-                // Append the profile picture and username to the friend container
-                friendContainer.append(profilePictureDiv, userInfoDiv);
-    
-                // Append the friend container to the list item
-                listItem.append(friendContainer);
+                // Append the profile picture and username to the list item
+                listItem.append(profilePictureDiv, userInfoDiv);
     
                 // Append the list item to the friends list
-                friendsUl.append(listItem);
+                friendsList.append(listItem);
             });
-    
-            // Append the list of friends to the friends list container
-            friendsList.append(friendsUl);
         } else {
             // Display a message for no friends
             friendsList.text('No friends found.');
         }
     }
-    
     
 
     // ... the rest of your code

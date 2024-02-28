@@ -1,6 +1,10 @@
 /* profile.css */
 
 .friend-container {
-    display: inline-block; /* or display: inline; */
-    margin-right: 10px; /* Adjust as needed */
+    display: inline-block;
+}
+
+.profile-picture,
+.user-info {
+    display: inline-block;
 }
