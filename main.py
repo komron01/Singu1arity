@@ -12,6 +12,7 @@ app.secret_key = 'singularity'  # Replace with a unique and secret key
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Add more if needed'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -21,10 +22,8 @@ def save_profile_picture(file, user_id):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
 
-        with open(file_path, 'rb') as image_file:
-            encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-
-        return encoded_image
+        # Return the file path, not base64 encoding
+        return file_path
     else:
         return None
 # global session_user_id
@@ -41,21 +40,18 @@ def feed():
 def dialogue():
     
     return render_template('dialogue.html')
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/update_profile',  methods=['GET'])
 def update_profile():
     session_user_id = session.get('user_id')
 
     user_data = get_user_data(session_user_id)
-    user_pic = user_data[8]
-    try:
-        picture_encoded = base64.b64encode(bytes(user_pic)).decode('utf-8') if user_pic else None
-    except Exception as e:
-        print(e)
-    print((picture_encoded[0:50]), flush=True )
-
+   
     if user_data:
-        return render_template('profile_update.html', user=user_data, user_pic=picture_encoded)
+        return render_template('profile_update.html', user=user_data)
     else:
         return redirect('/login')
 
@@ -71,7 +67,7 @@ def update_user_data(user_id, new_username, new_email, new_phone, new_pic):
             SET username = %s, email = %s, phone = %s, picture = %s
             WHERE user_id = %s
         """
-
+        print(new_pic, flush=True)
         # Execute the query with the new data
         cursor.execute(update_query, (new_username, new_email, new_phone, new_pic, user_id))
 

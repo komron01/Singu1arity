@@ -31,12 +31,11 @@
             <input type="tel" id="phone" name="phone" value="{{ user[7] }}">
             <br>
             <label for="profile_picture">Текущая фотография профиля:</label>
-            {% if user_pic %}
-            <img src="data:image/jpeg;base64, {{ user_pic }}" alt="User Profile Picture">
+            <div class="profile-picture">
+                <img src="{{ user[8] }}" alt="User Profile Picture">
+            </div>
+            
 
-            {% else %}
-                <p>No profile picture available</p>
-            {% endif %}
             
 
             <br>

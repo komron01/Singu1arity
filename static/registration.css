@@ -19,7 +19,12 @@ label {
     display: block;
     margin-bottom: 8px;
 }
-
+.profile-picture-circle {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+}
 input {
     width: 100%;
     padding: 10px;
