@@ -31,13 +31,14 @@
             <input type="tel" id="phone" name="phone" value="{{ user[7] }}">
             <br>
             <label for="profile_picture">Текущая фотография профиля:</label>
-            {% if user[8] %}
-            <!-- Convert memory view to bytes and then to Base64 -->
-            {% set image_data = user[8].tobytes() | b64encode %}
-            <img src="data:image/jpeg;base64,{{ image_data }}" alt="Текущая фотография профиля">
+            {% if user_pic %}
+            <img src="data:image/jpeg;base64, {{ user_pic }}" alt="User Profile Picture">
+
             {% else %}
                 <p>No profile picture available</p>
             {% endif %}
+            
+
             <br>
             <!-- Input for profile picture -->
             <label for="new_profile_picture">Выберите фотографию профиля:</label>

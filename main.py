@@ -5,7 +5,8 @@ from flask import *
 import settings
 import reg_autho
 import os
-from werkzeug.utils import secure_filename
+import base64
+
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
 UPLOAD_FOLDER = 'uploads'
@@ -16,10 +17,14 @@ def allowed_file(filename):
 
 def save_profile_picture(file, user_id):
     if file and allowed_file(file.filename):
-        filename = f"user_{user_id}_profile_picture.jpg"  # You can modify the filename as needed
-        print(filename, app.config['UPLOAD_FOLDER'], file, flush=True)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return filename
+        filename = f"user_{user_id}_profile_picture.jpg"
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+
+        with open(file_path, 'rb') as image_file:
+            encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+
+        return encoded_image
     else:
         return None
 # global session_user_id
@@ -40,25 +45,20 @@ def dialogue():
 @app.route('/update_profile',  methods=['GET'])
 def update_profile():
     session_user_id = session.get('user_id')
-    
-    # # Retrieve user ID from the URL parameters
-    # url_user_id = request.args.get('user_id')
-    # url_user_id = int(url_user_id) if url_user_id is not None else None
 
-    # if session_user_id is None or session_user_id != url_user_id:
-    #     # Unauthorized access, redirect to login
-    #     return redirect('/login')
-
-    # Retrieve additional user data from the database based on user ID
     user_data = get_user_data(session_user_id)
-    # print(user_data, flush=True)
+    user_pic = user_data[8]
+    try:
+        picture_encoded = base64.b64encode(bytes(user_pic)).decode('utf-8') if user_pic else None
+    except Exception as e:
+        print(e)
+    print((picture_encoded[0:50]), flush=True )
+
     if user_data:
-        
-        # Render the dashboard template with the retrieved user data
-        return render_template('profile_update.html', user=user_data)
+        return render_template('profile_update.html', user=user_data, user_pic=picture_encoded)
     else:
         return redirect('/login')
-    # return render_template('profile_update.html')
+
 def update_user_data(user_id, new_username, new_email, new_phone, new_pic):
     
     try:
