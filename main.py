@@ -21,8 +21,8 @@ def dialogue():
     
     return render_template('dialogue.html')
 
-@app.route('/profile_update')
-def profile_update():
+@app.route('/update_profile')
+def update_profile():
     
     return render_template('profile_update.html')
 

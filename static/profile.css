@@ -1,10 +1,8 @@
 /* profile.css */
 
-.friend-container {
-    display: inline-block;
-}
-
-.profile-picture,
-.user-info {
-    display: inline-block;
+.profile-picture-circle {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
 }

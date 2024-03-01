@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обновление профиля</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='profile-update.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='registration.css') }}">
     <!-- Подключаем стили для navbar и другие необходимые стили -->
 </head>
 
@@ -13,7 +13,7 @@
     <!-- Вставляем navbar -->
     {% include 'navbar.html' %}
 
-    <div class="update-profile-container">
+    <div class="registration-form">
         <!-- Форма для обновления профиля -->
         <form action="/update_profile" method="POST">
             <label for="username">Имя пользователя:</label>
