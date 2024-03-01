@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Search</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Include the search_results.js file -->
     <script src="{{ url_for('static', filename='search.js') }}"></script>
@@ -22,7 +23,7 @@
             <input type="text" id="searchLetter" name="searchLetter" autocomplete="off">
         </form>
 
-        <div id="searchResults"></div>
+        <div id="searchResults" class="user-list"></div>
     </div>
     
     <!-- Footer -->
@@ -30,12 +31,12 @@
         <p>&copy; 2024 singu/\arity</p>
     </footer>
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-<df-messenger
-  intent="WELCOME"
-  chat-title="Silgularity_Social_Network"
-  agent-id="1fcde105-e2fe-4dc8-b845-20624430c227"
-  language-code="en"
-></df-messenger>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="Silgularity_Social_Network"
+        agent-id="1fcde105-e2fe-4dc8-b845-20624430c227"
+        language-code="en"
+    ></df-messenger>
 </body>
 
 </html>

@@ -18,30 +18,52 @@ $(document).ready(function () {
     function displaySearchResults(users) {
         var searchResultsDiv = $('#searchResults');
         searchResultsDiv.empty();
-    
+
         if (users.length > 0) {
-            // Display the list of users
-            var userList = $('<ul>');
-            users.forEach(function (user) {
-                var username = user[0];
-                var profilePicture = user[1] || 'static/default.png';
-    
-                // Create a circular image with reduced size
-                var listItem = $('<li>');
-                var image = $('<img>')
-                    .attr('src', profilePicture)
-                    .attr('alt', username)
-                    .addClass('profile-image'); // Add a class for styling
-                listItem.append(image).append($('<span>').text(username));
-                userList.append(listItem);
-            });
-            searchResultsDiv.append(userList);
+            // Display the list of users in a table with 3 columns
+            var table = $('<table>').addClass('user-table');
+
+            for (var i = 0; i < users.length; i += 3) {
+                // Create a table row for every 3 users
+                var row = $('<tr>');
+
+                // Iterate over the next 3 users
+                for (var j = i; j < i + 3 && j < users.length; j++) {
+                    // Create a table cell for each user
+                    var cell = $('<td>');
+
+                    // Create a circular image with reduced size
+                    var userCard = $('<div>').addClass('user-card');
+
+                    // Create a div for the profile picture
+                    var profilePictureDiv = $('<div>').addClass('profile-picture-circle');
+                    var image = $('<img>')
+                        .attr('src', users[j][1] || 'uploads/default.png')
+                        .attr('alt', users[j][0]);
+                    profilePictureDiv.append(image);
+
+                    // Append the profile picture to the user card
+                    userCard.append(profilePictureDiv);
+
+                    // Append the username below the profile picture
+                    userCard.append($('<span>').text(users[j][0]));
+
+                    // Append the user card to the table cell
+                    cell.append(userCard);
+
+                    // Append the table cell to the table row
+                    row.append(cell);
+                }
+
+                // Append the table row to the table
+                table.append(row);
+            }
+
+            // Append the table to the search results
+            searchResultsDiv.append(table);
         } else {
             // Display a message for no results
             searchResultsDiv.text('No users found.');
         }
     }
-    
-    
-    
 });
