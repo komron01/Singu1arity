@@ -5,27 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль пользователя</title>
-    <!-- Подключаем стили для navbar -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}"> -->
-    <!-- Подключаем общие стили для страниц -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- Подключаем свои стили для страницы профиля -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}"> -->
-    <!-- Подключаем favicon -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{{ url_for('static', filename='profile.js') }}"></script>
-
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
+
 
 <body>
     
     <div class="left-image-container">
-        <img src="{{ url_for('static', filename='animaciya1.jpg') }}" alt="Animation 1" class="animation" id="animation1">
+        <img src="{{ url_for('static', filename='part1.png') }}" alt="Animation 1" class="animation" id="animation1">
     </div>
     <div class="right-image-container">
-        <img src="{{ url_for('static', filename='animaciya2.jpg') }}" alt="Animation 2" class="animation" id="animation2">
+        <img src="{{ url_for('static', filename='part2.png') }}" alt="Animation 2" class="animation" id="animation2">
     </div>
     <!-- Ваш остальной контент здесь -->
 
@@ -82,15 +75,13 @@
 
     <script src="{{ url_for('static', filename='animation.js') }}"></script>
 
-    <!-- <script>
-        // Удаляем div с картинками после 5 секунд
-        setTimeout(function() {
-            var animation1 = document.getElementById("animation1");
-            var animation2 = document.getElementById("animation2");
-            animation1.remove();
-            animation2.remove();
-        }, 5000);
-    </script> -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="Silgularity_Social_Network"
+  agent-id="1fcde105-e2fe-4dc8-b845-20624430c227"
+  language-code="en"
+></df-messenger>
 
 </body>
 

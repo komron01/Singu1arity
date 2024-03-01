@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обновление профиля</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='profile-update.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='registration.css') }}">
     <!-- Подключаем стили для navbar и другие необходимые стили -->
 </head>
 
@@ -13,25 +13,48 @@
     <!-- Вставляем navbar -->
     {% include 'navbar.html' %}
 
-    <div class="update-profile-container">
+    <div class="registration-form">
         <!-- Форма для обновления профиля -->
-        <form action="/update_profile" method="POST">
+        <!-- Форма для обновления профиля -->
+        <form action="/update_profile_post" method="POST" enctype="multipart/form-data">
+            <!-- Existing user data -->
             <label for="username">Имя пользователя:</label>
-            <input type="text" id="username" name="username" value="Текущее имя пользователя">
+            <input type="text" id="username" name="username" value="{{ user[1] }}">
             <br>
             <label for="description">Описание профиля:</label>
-            <textarea id="description" name="description">Текущее описание профиля</textarea>
+            <textarea id="description" name="description">{{ user.description }}</textarea>
             <br>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="Текущий email">
+            <input type="email" id="email" name="email" value="{{ user[3] }}">
             <br>
             <label for="phone">Номер телефона:</label>
-            <input type="tel" id="phone" name="phone" value="Текущий номер телефона">
+            <input type="tel" id="phone" name="phone" value="{{ user[7] }}">
             <br>
+            <label for="profile_picture">Текущая фотография профиля:</label>
+            {% if user[8] %}
+            <!-- Convert memory view to bytes and then to Base64 -->
+            {% set image_data = user[8].tobytes() | b64encode %}
+            <img src="data:image/jpeg;base64,{{ image_data }}" alt="Текущая фотография профиля">
+            {% else %}
+                <p>No profile picture available</p>
+            {% endif %}
+            <br>
+            <!-- Input for profile picture -->
+            <label for="new_profile_picture">Выберите фотографию профиля:</label>
+            <input type="file" id="new_profile_picture" name="new_profile_picture" accept="image/*">
+            <br>
+
+            <!-- Submit button -->
             <input type="submit" value="Обновить профиль">
         </form>
     </div>
-
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
+      intent="WELCOME"
+      chat-title="Silgularity_Social_Network"
+      agent-id="1fcde105-e2fe-4dc8-b845-20624430c227"
+      language-code="en"
+    ></df-messenger>
     <!-- Дополнительный контент страницы, если необходимо -->
 </body>
 

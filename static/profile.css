@@ -1,6 +1,8 @@
 /* profile.css */
 
-.friend-container {
-    display: inline-block; /* or display: inline; */
-    margin-right: 10px; /* Adjust as needed */
+.profile-picture-circle {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
 }

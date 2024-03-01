@@ -4,9 +4,25 @@ import psycopg2
 from flask import *
 import settings
 import reg_autho
+import os
+from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Add more if needed'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def save_profile_picture(file, user_id):
+    if file and allowed_file(file.filename):
+        filename = f"user_{user_id}_profile_picture.jpg"  # You can modify the filename as needed
+        print(filename, app.config['UPLOAD_FOLDER'], file, flush=True)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return filename
+    else:
+        return None
+# global session_user_id
 @app.route('/')
 def index():
     
@@ -21,11 +37,95 @@ def dialogue():
     
     return render_template('dialogue.html')
 
-@app.route('/profile_update')
-def profile_update():
+@app.route('/update_profile',  methods=['GET'])
+def update_profile():
+    session_user_id = session.get('user_id')
     
-    return render_template('profile_update.html')
+    # # Retrieve user ID from the URL parameters
+    # url_user_id = request.args.get('user_id')
+    # url_user_id = int(url_user_id) if url_user_id is not None else None
 
+    # if session_user_id is None or session_user_id != url_user_id:
+    #     # Unauthorized access, redirect to login
+    #     return redirect('/login')
+
+    # Retrieve additional user data from the database based on user ID
+    user_data = get_user_data(session_user_id)
+    # print(user_data, flush=True)
+    if user_data:
+        
+        # Render the dashboard template with the retrieved user data
+        return render_template('profile_update.html', user=user_data)
+    else:
+        return redirect('/login')
+    # return render_template('profile_update.html')
+def update_user_data(user_id, new_username, new_email, new_phone, new_pic):
+    
+    try:
+        conn = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = conn.cursor()
+
+        # Construct the SQL query to update user data
+        update_query = """
+            UPDATE public.users
+            SET username = %s, email = %s, phone = %s, picture = %s
+            WHERE user_id = %s
+        """
+
+        # Execute the query with the new data
+        cursor.execute(update_query, (new_username, new_email, new_phone, new_pic, user_id))
+
+        # Commit the changes
+        conn.commit()
+
+        # Close the cursor and connection
+        cursor.close()
+        conn.close()
+
+
+        return True  # Update successful
+    except Exception as e:
+        print("Error updating user data:", e)
+        return False  # Update failed
+
+@app.route('/update_profile_post', methods=['POST'])
+def update_profile_post():
+    try:
+        session_user_id = session.get('user_id')
+
+        if not session_user_id:
+            # Unauthorized access, redirect to login
+            return redirect('/login')
+
+        # Retrieve user data from the database based on the session user ID
+        user_data = get_user_data(session_user_id)
+
+        if not user_data:
+            return redirect('/login')
+
+        # Retrieve form data
+        new_username = request.form.get('username')
+        new_email = request.form.get('email')
+        new_phone = request.form.get('phone')
+        print(request.files,flush=True)
+
+        # Handle profile picture upload
+        
+        if 'new_profile_picture' in request.files:
+            
+            new_profile_picture = request.files['new_profile_picture']
+            
+            # Save the new profile picture and get the filename
+            profile_picture_filename = save_profile_picture(new_profile_picture, session_user_id)
+            
+            # Update user data in the database
+            update_user_data(session_user_id, new_username, new_email, new_phone, profile_picture_filename)
+
+        # Redirect to the updated profile page
+        return redirect(url_for('profile'))
+    except Exception as e:
+        print("Error updating profile:", e, flush=True)
+        abort(500)  # Raise a 500 error and display the error message
 @app.route('/wall')
 def wall():
     
@@ -95,7 +195,7 @@ def login():
 def check_username():
     # Get the username from the AJAX request
     username = request.form.get('username')
-    print(username, flush=True)
+    # print(username, flush=True)
     # Perform the check (replace this with your actual logic)
     is_username_available = not username_exists_in_database(username)
 
@@ -104,9 +204,9 @@ def check_username():
 
 def username_exists_in_database(username):
     try:
+  
         conn = psycopg2.connect(**settings.DATABASE_CONFIG)
         cursor = conn.cursor()
-
         # Example query to check if the username exists in the "users" table
         cursor.execute("SELECT username FROM users WHERE username = %s", (username,))
         result = cursor.fetchone()
@@ -128,7 +228,7 @@ def get_user_data(user_id):
         # Replace this query with the appropriate query to get user data based on user_id
         cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
         user_data = cursor.fetchone()
-
+        # print(user_data, flush=True)
         # Disconnect
         cursor.close()
         conn.close()
@@ -229,7 +329,7 @@ def get_users_by_letter(search_letter):
         # Example query to retrieve users starting with the given letter
         cursor.execute("SELECT username, picture FROM users WHERE username ILIKE %s", (search_letter + '%',))
         users = cursor.fetchall()
-        print(users, flush=True)
+        # print(users, flush=True)
         # Disconnect
         cursor.close()
         conn.close()

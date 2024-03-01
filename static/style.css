@@ -291,9 +291,7 @@ footer {
     position: fixed;
     top: 0;
     height: 100%;
-    width
 }
-<<<<<<< HEAD
 
 
 /* dialogue.css */
@@ -396,25 +394,4 @@ footer {
 .update-profile-container {
     width: 50%;
     margin: 0 auto;
-=======
-.search-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    border-radius: 8px;
-    margin-top: 20px;
-}
-
-#searchForm {
-    margin-bottom: 20px;
-}
-/* Add this CSS to your existing stylesheet or create a new one */
-.profile-image {
-    border-radius: 50%; /* Create a circular shape */
-    width: 50px; /* Set the desired width */
-    height: 50px; /* Set the desired height */
-    margin-right: 10px; /* Adjust as needed for spacing */
->>>>>>> c5f4582f4a7116f55d0b1e8280ca237872257a1c
 }
