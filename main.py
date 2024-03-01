@@ -267,7 +267,7 @@ def get_friends(user_id):
     friends = get_user_friends(user_id)
 
     # Convert the friends data to a format suitable for JSON response
-    friends_data = [{'id': friend[0], 'username': friend[1]} for friend in friends]
+    friends_data = [{'id': friend[0], 'username': friend[1], 'picture': friend[2] or 'uploads/default.png'} for friend in friends]
 
     return jsonify(friends_data)
 # Dashboard route

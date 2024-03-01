@@ -3,6 +3,12 @@
 .profile-picture-circle {
     border-radius: 50%;
     overflow: hidden;
-    width: 100px; /* Adjust the size as needed */
-    height: 100px; /* Adjust the size as needed */
+    width: 100px; /* Adjust the size of the circular container as needed */
+    height: 100px; /* Adjust the size of the circular container as needed */
+}
+
+.profile-picture-circle img {
+    width: 100%; /* Make the image take up 100% of the width of its container */
+    height: 100%; /* Make the image take up 100% of the height of its container */
+    object-fit: cover; /* Cover the entire container while maintaining aspect ratio */
 }

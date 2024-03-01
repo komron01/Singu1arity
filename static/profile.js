@@ -40,7 +40,7 @@ $(document).ready(function () {
     
                     // Create a div for the profile picture
                     var profilePictureDiv = $('<div>').addClass('profile-picture-circle');
-                    var profilePicture = $('<img>').attr('src', friends[j][1] || 'static/default.png').attr('alt', 'Profile Picture');
+                    var profilePicture = $('<img>').attr('src', friends[j][1] || 'uploads/default.png').attr('alt', 'Profile Picture');
                     profilePictureDiv.append(profilePicture);
     
                     // Append the profile picture to the friend container
