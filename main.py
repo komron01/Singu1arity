@@ -141,17 +141,34 @@ def profile():
     # Retrieve user ID from the session
     session_user_id = session.get('user_id')
 
-    if session_user_id is None:
-        # Unauthorized access, redirect to login
-        return redirect('/login')
+    # Retrieve the user ID from the URL parameters
+    url_user_id = request.args.get('user_id')
+
+    # Check if the viewer is the owner of the profile
+    is_owner = False
+
+    if url_user_id is not None:
+        # If url_user_id is present in the URL, use it
+        url_user_id = int(url_user_id)
+        is_owner = session_user_id == url_user_id
+    else:
+        # If url_user_id is not present, use session_user_id
+        url_user_id = session_user_id
+        is_owner = True  # Assume the viewer is the owner if no specific user_id is provided in the URL
 
     # Retrieve additional user data from the database based on user ID
-    user_data = get_user_data(session_user_id)
+    user_data = get_user_data(url_user_id)
+    user_pic = user_data[8]
+    if user_pic == None:
+        user_pic = 'uploads/default.png'
+
     if user_data:
-        # Render the dashboard template with the retrieved user data
-        return render_template('profile.html', user=user_data)
+        # Render the dashboard template with the retrieved user data and ownership status
+        return render_template('profile.html', user=user_data, user_pic=user_pic, is_owner=is_owner)
     else:
         return redirect('/login')
+
+
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -254,10 +271,10 @@ def get_user_friends(user_id):
 
         # Example query to retrieve friends of the given user
         cursor.execute("""
-            SELECT u.username, u.picture
+            SELECT CONCAT(u.f_name, ' ', u.s_name), u.picture, u.user_id
             FROM friends f
             JOIN users u ON (f.user_id2 = u.user_id)
-            WHERE f.user_id1 = %s AND f.status = 'pending'
+            WHERE f.user_id1 = %s AND f.status = 'accepted'
         """, (user_id,))
 
         friends = cursor.fetchall()
@@ -281,24 +298,80 @@ def get_friends(user_id):
     friends_data = [{'id': friend[0], 'username': friend[1], 'picture': friend[2] or 'uploads/default.png'} for friend in friends]
 
     return jsonify(friends_data)
-# Dashboard route
-# Dashboard route
-@app.route('/dashboard')
-def dashboard():
-    # Retrieve user ID from the session
-    session_user_id = session.get('user_id')
 
-    if session_user_id is None:
-        # Unauthorized access, redirect to login
-        return redirect('/login')
+@app.route('/add_friend/<int:friend_id>', methods=['POST'])
+def add_friend(friend_id):
+    try:
+        session_user_id = session.get('user_id')
 
-    # Retrieve additional user data from the database based on user ID
-    user_data = get_user_data(session_user_id)
-    if user_data:
-        # Render the dashboard template with the retrieved user data
-        return render_template('dashboard.html', user=user_data)
-    else:
-        return redirect('/login')
+        if not session_user_id:
+            # Unauthorized access, redirect to login or handle as needed
+            return redirect('/login')
+
+        # Check if the friend_id is valid and not the same as the user's ID
+        if friend_id == session_user_id:
+            # Invalid friend_id, handle as needed (e.g., show an error message)
+            return jsonify({'error': 'Invalid friend_id'})
+
+        # Check if the friendship already exists
+        if not friendship_exists(session_user_id, friend_id):
+            # Insert the friendship with 'accepted' status
+            insert_friendship(session_user_id, friend_id, 'accepted')
+
+            # Return a success response (you can customize this as needed)
+            return jsonify({'success': 'Friend request sent successfully'})
+        else:
+            # Friendship already exists, handle as needed (e.g., show a message)
+            return jsonify({'info': 'Friendship already exists'})
+
+    except Exception as e:
+        print("Error adding friend:", e)
+        return jsonify({'error': 'An error occurred while adding a friend'})
+
+def friendship_exists(user_id1, user_id2):
+    try:
+        conn = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = conn.cursor()
+
+        # Check if the friendship already exists with 'accepted' status
+        cursor.execute("""
+            SELECT id FROM friends
+            WHERE (user_id1 = %s AND user_id2 = %s AND status = 'accepted')
+               OR (user_id1 = %s AND user_id2 = %s AND status = 'accepted')
+        """, (user_id1, user_id2, user_id2, user_id1))
+
+        result = cursor.fetchone()
+
+        # Disconnect
+        cursor.close()
+        conn.close()
+
+        return result is not None  # Return True if friendship exists, False otherwise
+
+    except Exception as e:
+        print('Error checking friendship:', e)
+        return False  # Assume friendship exists in case of an error
+
+def insert_friendship(user_id1, user_id2, status):
+    try:
+        conn = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = conn.cursor()
+
+        # Insert the friendship with 'accepted' status
+        cursor.execute("""
+            INSERT INTO public.friends (user_id1, user_id2, status, created_at)
+            VALUES (%s, %s, %s, NOW())
+        """, (user_id1, user_id2, status))
+
+        # Commit the changes
+        conn.commit()
+
+        # Disconnect
+        cursor.close()
+        conn.close()
+
+    except Exception as e:
+        print('Error inserting friendship:', e)
 
     
 @app.route('/logout')
@@ -309,7 +382,7 @@ def logout():
 
 @app.route('/success')
 def success():
-    return "Registration successful!"
+    return redirect('/login')
 
 @app.route('/search')
 def search():
@@ -332,7 +405,7 @@ def get_users_by_letter(search_letter):
         cursor = conn.cursor()
 
         # Example query to retrieve users starting with the given letter
-        cursor.execute("SELECT username, picture FROM users WHERE username ILIKE %s", (search_letter + '%',))
+        cursor.execute("SELECT CONCAT(f_name, ' ', s_name), picture, user_id FROM users WHERE username ILIKE %s", (search_letter + '%',))
         users = cursor.fetchall()
         # print(users, flush=True)
         # Disconnect

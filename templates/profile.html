@@ -32,18 +32,25 @@
             <!-- Блок с именем пользователя, фотографией и описанием -->
             <div class="user-block">
                 <div class="profile-picture">
-                    <img src="{{ user[8] }}" alt="Фотография профиля">
+                    <img src="{{ user_pic }}" alt="Фотография профиля">
+                    
                 </div>
                 <div class="user-info">
                     <div id="userId" data-user-id="{{ user[0] }}"></div>
-                    <h2>First Name: {{ user[4] }} {{ user[5] }}</h2>
+                    <h2>Name: {{ user[4] }} {{ user[5] }}</h2>
                     <!-- <p>User ID: {{ user[0] }}</p> -->
                     <p>Username: {{ user[1] }}</p>
                     <p>Email: {{ user[3] }}</p>
                     
                     <p>Date of Birth: {{ user[6] }}</p>
                     <p>Phone: {{ user[7] }}</p>
-                    <button class="edit-profile-button">Редактировать профиль</button>
+                    {% if is_owner %}
+                        <!-- If the viewer is the owner, display the edit profile button -->
+                        <button class="edit-profile-button" id="editProfileButton">Редактировать профиль</button>
+                    {% else %}
+                        <!-- If the viewer is not the owner, display the add friend button -->
+                        <button class="add-friend-button" data-user-id="{{ user[0] }}">Добавить в друзья</button>
+                    {% endif %}
                 </div>
             </div>
         </section>

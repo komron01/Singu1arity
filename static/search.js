@@ -34,6 +34,7 @@ $(document).ready(function () {
 
                     // Create a circular image with reduced size
                     var userCard = $('<div>').addClass('user-card');
+                    var profileLink = $('<a>').attr('href', '/profile?user_id=' + users[j][2]);
 
                     // Create a div for the profile picture
                     var profilePictureDiv = $('<div>').addClass('profile-picture-circle');
@@ -41,9 +42,10 @@ $(document).ready(function () {
                         .attr('src', users[j][1] || 'uploads/default.png')
                         .attr('alt', users[j][0]);
                     profilePictureDiv.append(image);
+                    profileLink.append(profilePictureDiv);
 
                     // Append the profile picture to the user card
-                    userCard.append(profilePictureDiv);
+                    userCard.append(profileLink);
 
                     // Append the username below the profile picture
                     userCard.append($('<span>').text(users[j][0]));
