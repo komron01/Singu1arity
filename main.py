@@ -3,12 +3,21 @@
 import psycopg2
 from flask import *
 import settings
+from flask_session import Session
 import reg_autho
 import os
 import base64
 
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
+# Configure the Flask app to use the 'filesystem' session type
+app.config['SESSION_TYPE'] = 'filesystem'
+# Set the session timeout (in seconds), for example, 600 seconds (10 minutes)
+app.config['PERMANENT_SESSION_LIFETIME'] = 600
+Session(app)
+
+
+
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Add more if needed'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -34,7 +43,7 @@ def index():
 @app.route('/feed')
 def feed():
     
-    return render_template('feed.html')
+    return render_template('index.html')
 
 @app.route('/dialogue')
 def dialogue():
@@ -129,14 +138,10 @@ def wall():
 
 @app.route('/profile')
 def profile():
-        # Retrieve user ID from the session
+    # Retrieve user ID from the session
     session_user_id = session.get('user_id')
-    
-    # Retrieve user ID from the URL parameters
-    url_user_id = request.args.get('user_id')
-    url_user_id = int(url_user_id) if url_user_id is not None else None
 
-    if session_user_id is None or session_user_id != url_user_id:
+    if session_user_id is None:
         # Unauthorized access, redirect to login
         return redirect('/login')
 
@@ -147,7 +152,7 @@ def profile():
         return render_template('profile.html', user=user_data)
     else:
         return redirect('/login')
-    # return render_template('profile.html')
+
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -170,23 +175,29 @@ def registration():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Check if the user is already logged in
+    if 'user_id' in session:
+        # User is already logged in, redirect to the dashboard or profile
+        return redirect(url_for('profile'))  # or 'profile'
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
 
         # Perform login validation in the database
         user_id = reg_autho.db_login(username, password)
-        if user_id:            
+        if user_id:
             session['user_id'] = user_id[0]
 
             # Redirect to a dashboard or home page on successful login with user details
             return redirect(url_for('profile', user_id=user_id))
-        else:   
-            return 'Something went wrong'
-
+        else:
+            # Pass an error message to the login page
+            return render_template('login.html', error_message='Incorrect username or password')
 
     # Render the login page for GET requests or failed login
     return render_template('login.html')
+
 @app.route('/check-username', methods=['POST'])
 def check_username():
     # Get the username from the AJAX request
@@ -271,16 +282,13 @@ def get_friends(user_id):
 
     return jsonify(friends_data)
 # Dashboard route
+# Dashboard route
 @app.route('/dashboard')
 def dashboard():
     # Retrieve user ID from the session
     session_user_id = session.get('user_id')
-    
-    # Retrieve user ID from the URL parameters
-    url_user_id = request.args.get('user_id')
-    url_user_id = int(url_user_id) if url_user_id is not None else None
 
-    if session_user_id is None or session_user_id != url_user_id:
+    if session_user_id is None:
         # Unauthorized access, redirect to login
         return redirect('/login')
 
@@ -291,6 +299,7 @@ def dashboard():
         return render_template('dashboard.html', user=user_data)
     else:
         return redirect('/login')
+
     
 @app.route('/logout')
 def logout():

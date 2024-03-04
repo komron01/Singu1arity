@@ -19,7 +19,10 @@
     <div>
     <form action="/login" method="POST" class="login-form">
         <h2>Login to singu/\arity</h2>
-        
+        {% if error_message %}
+                <p class="error-message">{{ error_message }}</p>
+            {% endif %}
+            
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         
