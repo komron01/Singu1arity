@@ -28,12 +28,12 @@ $(document).ready(function () {
             // Display the list of friends in a table
             var table = $('<table>');
     
-            for (var i = 0; i < friends.length; i += 3) {
+            for (var i = 0; i < friends.length; i += 4) {
                 // Create a table row for every 3 friends
                 var row = $('<tr>');
     
                 // Iterate over the next 3 friends
-                for (var j = i; j < i + 3 && j < friends.length; j++) {
+                for (var j = i; j < i + 4 && j < friends.length; j++) {
                     // Create a table cell for each friend
                     var cell = $('<td>');
     

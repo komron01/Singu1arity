@@ -271,11 +271,19 @@ def get_user_friends(user_id):
 
         # Example query to retrieve friends of the given user
         cursor.execute("""
-            SELECT CONCAT(u.f_name, ' ', u.s_name), u.picture, u.user_id
+            SELECT CONCAT(u1.f_name, ' ', u1.s_name) AS friend_name, u1.picture AS friend_picture, u1.user_id AS friend_id
             FROM friends f
-            JOIN users u ON (f.user_id2 = u.user_id)
+            JOIN users u1 ON (f.user_id2 = u1.user_id)
             WHERE f.user_id1 = %s AND f.status = 'accepted'
-        """, (user_id,))
+            
+            UNION
+            
+            SELECT CONCAT(u2.f_name, ' ', u2.s_name) AS friend_name, u2.picture AS friend_picture, u2.user_id AS friend_id
+            FROM friends f
+            JOIN users u2 ON (f.user_id1 = u2.user_id)
+            WHERE f.user_id2 = %s AND f.status = 'accepted'
+        """, (user_id, user_id))
+
 
         friends = cursor.fetchall()
 

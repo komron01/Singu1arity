@@ -12,6 +12,7 @@
 <body>
     <!-- Вставляем navbar -->
     {% include 'navbar.html' %}
+    <div class="main-container"> <!-- Add a container for the main content -->
 
     <div class="registration-form">
         <!-- Форма для обновления профиля -->
@@ -21,9 +22,9 @@
             <label for="username">Имя пользователя:</label>
             <input type="text" id="username" name="username" value="{{ user[1] }}">
             <br>
-            <label for="description">Описание профиля:</label>
+            <!-- <label for="description">Описание профиля:</label>
             <textarea id="description" name="description">{{ user.description }}</textarea>
-            <br>
+            <br> -->
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="{{ user[3] }}">
             <br>
@@ -47,6 +48,7 @@
             <!-- Submit button -->
             <input type="submit" value="Обновить профиль">
         </form>
+    </div>
     </div>
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
