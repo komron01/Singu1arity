@@ -6,8 +6,7 @@ import settings
 from flask_session import Session
 import reg_autho
 import os
-import base64
-
+from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
 # Configure the Flask app to use the 'filesystem' session type
@@ -425,6 +424,86 @@ def get_users_by_letter(search_letter):
     except Exception as e:
         print('Error occurred:', e)
         return []  # Return an empty list if an error occurs
+
+# Route to get posts for a specific user
+@app.route('/get_posts/<int:user_id>', methods=['GET'])
+def get_posts(user_id):
+    try:
+        # Connect to the database
+        connection = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = connection.cursor()
+
+        # Fetch posts for the specified user from the database
+        cursor.execute("""
+            SELECT post_id, user_id, content, timestamp
+            FROM posts
+            WHERE user_id = %s
+        """, (user_id,))
+
+        posts = cursor.fetchall()
+
+        # Convert posts to a list of dictionaries
+        posts_list = [
+            {'post_id': post[0], 'user_id': post[1], 'content': post[2], 'timestamp': post[3]}
+            for post in posts
+        ]
+
+        # Close the database connection
+        connection.close()
+
+        return jsonify(posts_list)
+    except Exception as e:
+        return str(e)
+
+# Route to add a new post for a specific user
+@app.route('/add_post/<int:user_id>', methods=['POST'])
+def add_post(user_id):
+    try:
+        # Connect to the database
+        connection = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = connection.cursor()
+
+        # Get the content from the request
+        content = request.form.get('content')
+
+        # Insert a new post into the database
+        cursor.execute("""
+            INSERT INTO posts (user_id, content, timestamp)
+            VALUES (%s, %s, %s)
+        """, (user_id, content, datetime.utcnow()))
+
+        # Commit the transaction and close the database connection
+        connection.commit()
+        connection.close()
+
+        return 'Post added successfully!'
+    except Exception as e:
+        return str(e)
+
+
+# Route to handle post deletion
+@app.route('/delete_post/<int:post_id>', methods=['DELETE'])
+def delete_post(post_id):
+    try:
+        # Connect to the database
+        connection = psycopg2.connect(**settings.DATABASE_CONFIG)
+        cursor = connection.cursor()
+
+        # Delete the post with the given post_id
+        cursor.execute("DELETE FROM posts WHERE post_id = %s", (post_id,))
+        
+        # Commit the changes to the database
+        connection.commit()
+
+        # Close the database connection
+        cursor.close()
+        connection.close()
+
+        return jsonify({'message': 'Post deleted successfully'}), 200
+
+    except Exception as e:
+        # Handle any errors that may occur during the process
+        return jsonify({'error': str(e)}), 500
 
 @app.errorhandler(404)
 def page_not_found(error):
