@@ -102,13 +102,14 @@ $(document).ready(function () {
     
     function fetchUserPosts() {
         var userId = $('#userId').data('user-id');
-
+        var owner = $('#owner').data('user-owner');
+        
         // Perform an AJAX request to fetch user posts
         $.ajax({
             url: '/get_posts/' + userId,
             method: 'GET',
             success: function (posts) {
-                displayUserPosts(posts);
+                displayUserPosts(posts, owner);
             },
             error: function (error) {
                 console.error('Error fetching posts:', error);
@@ -116,7 +117,7 @@ $(document).ready(function () {
         });
     }
 
-    function displayUserPosts(posts, currentUserId) {
+    function displayUserPosts(posts, owner) {
         var postsContainer = $('#postsContainer');
         postsContainer.empty();
     
@@ -128,9 +129,10 @@ $(document).ready(function () {
                 // Create post header with timestamp and delete button
                 var postHeader = $('<div>').addClass('post-header');
                 postHeader.append($('<p>').addClass('post-time').text(posts[i].timestamp));
-    
+                
                 // Check if the current user is the owner of the post
-                if (currentUserId === posts[i].user_id) {
+                if (owner ==='True') {
+
                     // If yes, create and append the delete button with recycle bin icon
                     var deleteButton = $('<button>')
                         .addClass('deleteButton')
