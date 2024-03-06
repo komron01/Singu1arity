@@ -1,0 +1,39 @@
+/* Add any general styles you want for the feed page here */
+
+/* Style for the news feed section */
+.news-feed {
+    margin-top: 20px;
+}
+
+/* Style for each news item */
+.news-item {
+    background-color: #f5f5f5;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the post username */
+.news-item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Style for the post content */
+.news-item p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Style for the 'No posts found' message */
+#postsContainer:empty::before {
+    content: 'No posts found.';
+    font-size: 18px;
+    color: #555;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}

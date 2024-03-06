@@ -395,3 +395,22 @@ footer {
     width: 50%;
     margin: 0 auto;
 }
+/* Add this to your style.css file or create a new one */
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push user info to the right */
+}
+
+.user-info-container img {
+    border-radius: 50%; /* Make the image circular */
+    width: 40px; /* Set the width of the image */
+    height: 40px; /* Set the height of the image */
+    margin-right: 10px; /* Add some spacing between image and user info */
+}
+
+.user-info-container span {
+    font-weight: bold;
+    color: #ffffff;
+}

@@ -38,11 +38,56 @@ def save_profile_picture(file, user_id):
 @app.route('/')
 def index():
     
-    return render_template('index.html')
-@app.route('/feed')
+    return render_template('login.html')
+
+@app.route('/feed', methods=['GET'])
 def feed():
+    user_id = session.get('user_id')
+
+    if user_id is not None:
+        user_data = get_user_data(user_id)
+        user_pic = user_data[8]
+        if user_pic == None:
+            user_pic = 'uploads/default.png'
     
-    return render_template('index.html')
+        return render_template('feed.html', user=user_id, user_pic=user_pic)
+    else:
+        # Handle case where user is not authenticated
+        return redirect(url_for('login'))
+
+@app.route('/get_posts_wall', methods=['GET'])
+def get_posts_wall():
+    user_id = session.get('user_id')
+    feed_posts = '1'  # Initialize to None in case there's an exception
+
+    if user_id is not None:
+        
+        try:
+            conn = psycopg2.connect(**settings.DATABASE_CONFIG)
+            cursor = conn.cursor()
+            
+            # Fetch posts from friends with JOIN and ORDER BY timestamp
+            cursor.execute("""
+                SELECT distinct(p.post_id), p.user_id, p.content, p.timestamp, u.username, u.f_name, u.s_name
+                FROM friends f
+                JOIN posts p ON (f.user_id1 = p.user_id OR f.user_id2 = p.user_id)
+                JOIN users u ON p.user_id = u.user_id
+                WHERE f.user_id1 = %s OR f.user_id2 = %s
+                ORDER BY p.timestamp DESC;
+
+            """, (user_id,user_id))
+            
+                        
+            feed_posts = cursor.fetchall()
+            print(feed_posts, user_id, flush=True)
+            cursor.close()
+            conn.close()
+        except Exception as e:
+            print(e, flush=True)
+
+        
+    return  feed_posts
+
 
 @app.route('/dialogue')
 def dialogue():
@@ -162,6 +207,7 @@ def profile():
         user_pic = 'uploads/default.png'
 
     if user_data:
+        print(user_data, flush=True)
         # Render the dashboard template with the retrieved user data and ownership status
         return render_template('profile.html', user=user_data, user_pic=user_pic, is_owner=is_owner)
     else:
@@ -185,6 +231,8 @@ def registration():
         if reg_autho.db_register(username, password, f_name, s_name, email, dob, phone):
             # Redirect to the success page on successful registration
             return redirect(url_for('success'))
+        else:
+            return render_template('registration.html', error='We have someone already with that username or email')
 
     # Render the registration page for GET requests or failed registration
     return render_template('registration.html')
@@ -393,7 +441,14 @@ def success():
 
 @app.route('/search')
 def search():
-    return render_template('search.html')
+    user_id = session.get('user_id')
+
+    if user_id is not None:
+        user_data = get_user_data(user_id)
+        user_pic = user_data[8]
+        if user_pic == None:
+            user_pic = 'uploads/default.png'
+    return render_template('search.html', user=user_data, user_pic=user_pic)
 
 # New route for handling user search
 @app.route('/search_user', methods=['GET'])

@@ -8,9 +8,10 @@ def db_register(username, password, f_name, s_name, email, dob, phone):
         conn = psycopg2.connect(**settings.DATABASE_CONFIG)
         cursor = conn.cursor()
 
-        # Check if the username already exists
-        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+        # Check if the username or email already exists
+        cursor.execute("SELECT * FROM users WHERE username = %s OR email = %s", (username, email))
         existing_user = cursor.fetchone()
+
 
         if existing_user:
             # Username already exists, return False (registration failed)

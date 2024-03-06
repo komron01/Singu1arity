@@ -21,11 +21,14 @@
     <div class="main-container"> <!-- Add a container for the main content -->
         <form action="/registration" method="POST" class="registration-form">
             <h2>Join singu/\arity</h2>
-
+        
         <!-- Basic registration fields -->
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
-        
+        {% if error %}
+            <div>{{ error }}</div>
+        {% endif %}
+
         <div id="usernameAvailability"></div>
 
         <label for="firstName">First Name:</label>

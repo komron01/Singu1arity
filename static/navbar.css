@@ -1,26 +1,62 @@
 /* navbar.css */
-
-body {
-    margin-top: 60px; /* Adjust the margin-top value based on your navbar height */
+body{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #495057;
 }
+/* Navbar Styles */
 
 nav {
     background-color: #495057;
+    color: #ffffff;
     padding: 10px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* Set a higher z-index to keep the navbar on top */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 nav a {
     color: #ffffff;
     text-decoration: none;
-    padding: 10px;
-    margin: 0 10px;
+    margin: 0 15px;
     font-weight: bold;
 }
 
-nav a:hover {
-    background-color: #495057;
+.register-button,
+.login-button,
+.logout-button,
+.update-button{
+    background-color: #13d0e1; /* Green color */
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline for links */
+}
+
+nav a:hover{
+    background-color: #283da7; /* Darker green color on hover */
+
+}
+/* User Info Styles */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Push other buttons to the right */
+}
+
+.profile-picture {
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    border-radius: 50%;
+    margin-right: 8px; /* Adjust spacing as needed */
+}
+
+.user-name {
+    font-size: 16px;
+    color: #333;
 }

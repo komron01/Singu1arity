@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -17,6 +17,11 @@
         <a href="#">Notifications</a>
         <a href="#">Messages</a>
         {% if user %}
+            <div class="user-info-container">
+                <img src="{{ user_pic }}" alt="Profile Picture">
+                <span>{{ user[4]}} {{ user[5] }}</span>
+            </div>
+
             <a href="/update_profile" class="login-button">Update Profile</a>
             <a href="{{ url_for('logout') }}" class="login-button">Logout</a>
         {% else %}

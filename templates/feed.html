@@ -4,44 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feed</title>
-    <!-- Подключаем стили для navbar -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}"> -->
-    <!-- Подключаем общие стили для страниц -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Подключаем свои стили для страницы ленты новостей -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='feed.css') }}"> -->
-    <!-- Подключаем favicon -->
+    <title>singu/\arity - News Feed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='feed.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 <body>
-    <!-- Вставляем navbar -->
     {% include 'navbar.html' %}
 
-    <!-- Блок для отображения новостей -->
+    <!-- Header -->
+    <header>
+        <h1>singu/\arity</h1>
+        <p>Connect and Share</p>
+    </header>
+
+    <!-- News Feed Section -->
     <section class="news-feed">
-        <h2>Лента новостей</h2>
-        <!-- Здесь можно вставить код для отображения новостей -->
-        <div class="news">
-            <div class="news-item">
-                <h3>Заголовок новости 1</h3>
-                <p>Текст новости 1</p>
-            </div>
-            <div class="news-item">
-                <h3>Заголовок новости 2</h3>
-                <p>Текст новости 2</p>
-            </div>
-            <!-- Добавьте сколько угодно новостей сюда -->
+        <h2>News Feed</h2>
+        <!-- Container for displaying posts -->
+        <div id="postsContainer" class="news">
+            <!-- Posts will be dynamically added here using JavaScript -->
         </div>
     </section>
+    
+
+    <!-- In Case You Missed It Section -->
+    <section>
+        <h2>In Case You Missed It</h2>
+        <p>Highlight some posts or updates...</p>
+    </section>
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 singu/\arity</p>
+    </footer>
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include your custom JavaScript file for feed -->
+    <script src="{{ url_for('static', filename='feed.js') }}"></script>
+
+
+    <!-- Include Dialogflow messenger -->
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-<df-messenger
-  intent="WELCOME"
-  chat-title="Silgularity_Social_Network"
-  agent-id="1fcde105-e2fe-4dc8-b845-20624430c227"
-  language-code="en"
-></df-messenger>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="Silgularity_Social_Network"
+        agent-id="1fcde105-e2fe-4dc8-b845-20624430c227"
+        language-code="en"
+    ></df-messenger>
 </body>
 
 </html>
