@@ -3,6 +3,10 @@
 /* Style for the news feed section */
 .news-feed {
     margin-top: 20px;
+    width: 500px;
+}
+.news-feed h2{
+    text-align: center;
 }
 
 /* Style for each news item */
@@ -12,6 +16,7 @@
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* width: 300px; */
 }
 
 /* Style for the post username */
@@ -20,6 +25,11 @@
     margin-bottom: 5px;
     color: #333;
 }
+.news-item h5 {
+    font-size: 10px;
+    margin-top: 5px;
+    color: #161414;
+}
 
 /* Style for the post content */
 .news-item p {
@@ -27,6 +37,24 @@
     margin-bottom: 10px;
     color: #555;
 }
+/* Style for the container div */
+.username-picture-container {
+    display: flex; /* Use flexbox to create a flexible container */
+    align-items: center; /* Center items vertically */
+}
+
+/* Style for the username (h3) element */
+.username-picture-container h3 {
+    margin-right: 10px; /* Add some space between username and profile picture */
+}
+
+/* Style for the profile picture (img) element */
+.profile-picture {
+    width: 40px; /* Adjust the width as needed */
+    height: 40px; /* Adjust the height as needed */
+    border-radius: 50%; /* Make it circular, adjust as needed */
+}
+
 
 /* Style for the 'No posts found' message */
 #postsContainer:empty::before {
@@ -37,3 +65,12 @@
     text-align: center;
     margin-top: 20px;
 }
+/* Add this to your style.css file or create a new one */
+
+.profile-picture {
+    border-radius: 50%; /* Make the image circular */
+    width: 40px; /* Set the width of the image */
+    height: 40px; /* Set the height of the image */
+    margin-right: 10px; /* Add some spacing between image and user info */
+}
+

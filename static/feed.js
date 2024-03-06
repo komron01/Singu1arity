@@ -32,12 +32,18 @@ function displayPosts(posts) {
         posts.forEach(function (post) {
             var postDiv = $('<div>').addClass('news-item');
 
-            // Display username with newline
-            postDiv.append($('<h3>').html(`${post[5] + ' ' + post[6]}<br>`));
-            
+            // Display username and profile picture in one line
+            var profilePicture = $('<img>').attr('src', post[7] ? post[7] : 'uploads/default.png').attr('alt', 'Profile Picture').addClass('profile-picture');
+            var usernameAndPictureDiv = $('<div>').addClass('username-picture-container');
+            usernameAndPictureDiv.append($('<h3>').text(`${post[5]} ${post[6]}`));
+            usernameAndPictureDiv.append(profilePicture);
+
+            // Append username and picture div
+            postDiv.append(usernameAndPictureDiv);
+
             // Display formatted datetime with newline
             const formattedDateTime = formatDateTime(post[3]);
-            postDiv.append($('<p>').html(`${formattedDateTime}<br>`));
+            postDiv.append($('<h5>').html(`${formattedDateTime}<br>`));
 
             // Display post content
             postDiv.append($('<p>').text(post[2]));

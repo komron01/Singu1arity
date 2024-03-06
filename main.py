@@ -68,7 +68,7 @@ def get_posts_wall():
             
             # Fetch posts from friends with JOIN and ORDER BY timestamp
             cursor.execute("""
-                SELECT distinct(p.post_id), p.user_id, p.content, p.timestamp, u.username, u.f_name, u.s_name
+                SELECT distinct(p.post_id), p.user_id, p.content, p.timestamp, u.username, u.f_name, u.s_name, u.picture
                 FROM friends f
                 JOIN posts p ON (f.user_id1 = p.user_id OR f.user_id2 = p.user_id)
                 JOIN users u ON p.user_id = u.user_id
