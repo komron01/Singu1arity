@@ -7,6 +7,8 @@ from flask_session import Session
 import reg_autho
 import os
 from datetime import datetime
+from PIL import Image
+
 app = Flask(__name__)
 app.secret_key = 'singularity'  # Replace with a unique and secret key
 # Configure the Flask app to use the 'filesystem' session type
@@ -30,10 +32,20 @@ def save_profile_picture(file, user_id):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
 
+        # Resize the image to a minimum size of 360x360
+        resize_image(file_path)
+
         # Return the file path, not base64 encoding
         return file_path
     else:
         return None
+
+def resize_image(file_path):
+    # Open the image using Pillow
+    with Image.open(file_path) as img:
+        # Resize the image to a minimum size of 360x360
+        img = img.resize((360, 360))
+        img.save(file_path)
 # global session_user_id
 @app.route('/')
 def index():
@@ -50,7 +62,7 @@ def feed():
         if user_pic == None:
             user_pic = 'uploads/default.png'
     
-        return render_template('feed.html', user=user_id, user_pic=user_pic)
+        return render_template('feed.html', user=user_data, user_pic=user_pic)
     else:
         # Handle case where user is not authenticated
         return redirect(url_for('login'))
@@ -58,7 +70,7 @@ def feed():
 @app.route('/get_posts_wall', methods=['GET'])
 def get_posts_wall():
     user_id = session.get('user_id')
-    feed_posts = '1'  # Initialize to None in case there's an exception
+    feed_posts = None  # Initialize to None in case there's an exception
 
     if user_id is not None:
         
@@ -79,7 +91,7 @@ def get_posts_wall():
             
                         
             feed_posts = cursor.fetchall()
-            print(feed_posts, user_id, flush=True)
+            # print(feed_posts, user_id, flush=True)
             cursor.close()
             conn.close()
         except Exception as e:
@@ -104,7 +116,11 @@ def update_profile():
     user_data = get_user_data(session_user_id)
    
     if user_data:
-        return render_template('profile_update.html', user=user_data)
+        user_data = get_user_data(session_user_id)
+        user_pic = user_data[8]
+        if user_pic == None:
+            user_pic = 'uploads/default.png'
+        return render_template('profile_update.html', user=user_data, user_pic =user_pic)
     else:
         return redirect('/login')
 
@@ -120,7 +136,7 @@ def update_user_data(user_id, new_username, new_email, new_phone, new_pic):
             SET username = %s, email = %s, phone = %s, picture = %s
             WHERE user_id = %s
         """
-        print(new_pic, flush=True)
+        # print(new_pic, flush=True)
         # Execute the query with the new data
         cursor.execute(update_query, (new_username, new_email, new_phone, new_pic, user_id))
 
@@ -156,7 +172,7 @@ def update_profile_post():
         new_username = request.form.get('username')
         new_email = request.form.get('email')
         new_phone = request.form.get('phone')
-        print(request.files,flush=True)
+        # print(request.files,flush=True)
 
         # Handle profile picture upload
         
@@ -207,7 +223,7 @@ def profile():
         user_pic = 'uploads/default.png'
 
     if user_data:
-        print(user_data, flush=True)
+        # print(user_data, flush=True)
         # Render the dashboard template with the retrieved user data and ownership status
         return render_template('profile.html', user=user_data, user_pic=user_pic, is_owner=is_owner)
     else:

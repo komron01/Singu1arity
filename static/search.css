@@ -1,35 +1,85 @@
-/* search.css */
+/* Style for the overall search container */
+.search-container {
+    max-width: 600px; /* Adjust the maximum width as needed */
+    margin: 20px auto; /* Center the container */
+}
 
+/* Style for the search form */
+#searchForm {
+    margin-bottom: 20px; /* Add some space between the form and results */
+}
+
+/* Style for the label in the search form */
+label {
+    display: block; /* Make the label a block element to stack it on top of the input */
+    margin-bottom: 5px; /* Add a small space below the label */
+}
+
+/* Style for the search input */
+#searchLetter {
+    width: 100%; /* Make the input take up the full width of its container */
+    padding: 8px; /* Add some padding for better visual appeal */
+    box-sizing: border-box; /* Include padding and border in the input's total width */
+}
+
+/* Style for the search results container */
+#searchResults {
+    border: 1px solid #ccc; /* Add a border for a visual separation */
+    padding: 10px; /* Add some padding to the results container */
+}
+
+/* Style for the user list within the results container */
 .user-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 20px;
+    list-style: none; /* Remove default list styles */
+    margin: 0; /* Remove any default margin */
+    padding: 0; /* Remove any default padding */
 }
 
-.profile-picture-circle {
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
-}
-
+/* Style for individual user items in the list */
 .user-list li {
-    text-align: center;
-    margin: 10px;
+    margin-bottom: 5px; /* Add space between each user item */
+}
+/* Style for the user table */
+.user-table {
+    width: 100%; /* Make the table take up the full width of its container */
+    border-collapse: collapse; /* Collapse the border spacing between table cells */
 }
 
-.user-list img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* Style for table rows */
+.user-table tr {
+    border-bottom: 1px solid #ccc; /* Add a border between each table row */
 }
 
-/* Add any additional styles as needed */
-/* Add this rule to your CSS file */
+/* Style for table cells */
+.user-table td {
+    padding: 10px; /* Add padding to the table cells for spacing */
+    text-align: center; /* Center-align the content within the table cells */
+}
+
+/* Style for the user card */
 .user-card {
-    margin-bottom: 50px; /* Adjust the margin as needed */
-    margin-right: 50px; /* Adjust the margin as needed */
+    text-align: center; /* Center-align the content within the user card */
+}
 
+/* Style for the profile picture circle */
+.profile-picture-circle {
+    width: 80px; /* Set the width of the profile picture circle */
+    height: 80px; /* Set the height of the profile picture circle */
+    border-radius: 50%; /* Create a circular shape */
+    overflow: hidden; /* Hide any content that extends beyond the circular shape */
+    margin: 0 auto; /* Center the profile picture circle within its container */
+}
+
+/* Style for the profile picture image */
+.profile-picture-circle img {
+    width: 100%; /* Make the image take up the full width of the circular container */
+    height: auto; /* Maintain the aspect ratio of the image */
+    display: block; /* Remove any default spacing below the image */
+}
+
+/* Style for the username below the profile picture */
+.user-card span {
+    display: block; /* Place each username on a new line */
+    margin-top: 5px; /* Add some space between the profile picture and username */
+    font-weight: bold; /* Make the username text bold */
 }

@@ -1,5 +1,3 @@
-// search.js
-
 $(document).ready(function () {
     $('#searchLetter').on('input', function () {
         var searchLetter = $(this).val();
@@ -40,7 +38,11 @@ $(document).ready(function () {
                     var profilePictureDiv = $('<div>').addClass('profile-picture-circle');
                     var image = $('<img>')
                         .attr('src', users[j][1] || 'uploads/default.png')
-                        .attr('alt', users[j][0]);
+                        .attr('alt', users[j][0])
+                        .on('load', function() {
+                            // Triggered when the image has fully loaded
+                            $(this).closest('.user-card').addClass('image-loaded');
+                        });
                     profilePictureDiv.append(image);
                     profileLink.append(profilePictureDiv);
 
